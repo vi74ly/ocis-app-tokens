@@ -14,19 +14,13 @@
       </p>
       <h2 class="oc-heading-divider">Create Token</h2>
       <form id="create-token-form" @submit.prevent="saveToken()">
-        <!-- Custom labels only supported on OCIS > 7.2.0 -->
-        <oc-text-input
-          v-model="create_token_label"
-          label="Label (Optional)"
-          :class="'token-label oc-mb' + (enableCustomLabels ? '' : ' oc-hidden')"
-        />
-        <oc-grid gutter="small" class="oc-mb oc-flex oc-flex-top">
+        <div class="oc-flex oc-flex-middle" style="gap: 1%;">
           <oc-text-input
             v-model="create_token_expiry"
             label="Expires in"
             type="number"
             :error-message="create_token_error"
-            style="width: 5em"
+            style="width: 6em"
             class="expires-input"
           />
           <oc-select
@@ -38,8 +32,15 @@
             style="width: 8em"
             class="expires-unit-dropdown"
           />
-        </oc-grid>
-        <oc-button variation="primary" class="oc-mb save-token-btn" submit="submit"> Create </oc-button>
+	  <!-- Custom labels only supported on OCIS > 7.2.0 -->
+          <oc-text-input
+            v-model="create_token_label"
+            label="Label (Optional)"
+            style="width: 20em"
+            :class="'token-label' + (enableCustomLabels ? '' : ' oc-hidden')"
+	  />
+          <oc-button variation="primary" class="save-token-btn" submit="submit" style="margin-top: 18px"> Create </oc-button>
+	</div>
       </form>
       <h2 class="oc-heading-divider">Existing Tokens</h2>
       <oc-table :fields="tokenTableFields" :data="tokens" :sticky="true" :hover="true" idKey="token" class="token-table">
@@ -451,5 +452,18 @@ main {
       display: none;
     }
   }
+}
+</style>
+
+<style scoped>
+:deep(.expires-input input[type="number"]) {
+  box-shadow: none !important; 
+}
+
+.expires-unit-dropdown :deep(.oc-select),
+.expires-unit-dropdown :deep(select),
+.expires-unit-dropdown :deep(button) {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 </style>
